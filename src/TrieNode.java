@@ -4,23 +4,25 @@ public class TrieNode implements Comparable<TrieNode> {
     Map<Character, TrieNode> links;
     int hitTimes = 0;
     String s;
-    List<TrieNode> hotWords;
+    List<TrieNode> hottests;
     private Set<String> hotSet;
     private int topK;
 
     TrieNode(int k) {
-        hotWords = new ArrayList<>();
+        hottests = new ArrayList<>();
+        links = new HashMap<>();
+        hotSet = new HashSet<>();
         this.topK = k;
     }
 
-    void insertWord(TrieNode node) {
+    public void updateTopSentences(TrieNode node) {
         if (!hotSet.contains(node.s)) {
-            hotWords.add(node);
+            hottests.add(node);
             hotSet.add(node.s);
         }
-        Collections.sort(hotWords);
-        if (hotWords.size() > topK) {
-            String removed = hotWords.remove(topK).s; //remove the last word
+        Collections.sort(hottests);
+        if (hottests.size() > topK) {
+            String removed = hottests.remove(topK).s; //remove the last word
             hotSet.remove(removed);
         }
     }
